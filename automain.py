@@ -29,14 +29,20 @@ MAIN MENU
         replit.clear()
         reset()
 
+    # Generate Puzzle
     puz = generate_puzzle()
-    firstguesses = firstplay()
-    play(firstguesses, puz)
-    
 
+    # Generate first guess
+    firstguesses = firstplay()
+
+    # Pass puzzle and first guess to play
+    play(firstguesses, puz)
+
+    
+# Generate puzzle
 def generate_puzzle():
 
-    # Generate puzzle
+    
     a = [0, 0, 0, 0]
     
     for i in range(4):
@@ -44,33 +50,45 @@ def generate_puzzle():
         
     return a
 
+# Initial guess
 def firstplay():
 
     guesses = [0, 0, 0, 0]
 
-    # Initial guess
-    for a in range(4)
+    
+    for a in range(4):
         guesses[a] = random.randint(1, 6)
 
     return guesses
-    
-def play(guesses, puz)
 
+
+'''
+This function first passes the puzzle and firstguess to hints - then uses the hints to optimize its possible pool of guesses - then calls itself again with an updated guess. 
+This will keep going until the guess is correct and the program ends in the hints function'''
+# UNFINISHED
+def play(guesses, puz):
+
+    # Runs the current guess through the hints function to see if it was correct and (if not) get updated hints
     correctall, correct = hints(guesses, puz)
 
-    
 
+    # UNFINISHED - Make a list of all possible guesses - Haven't figured out proper syntax yet for this situation
+
+    possible = [[]]
+
+    for a in range(4):
+        for b in range(6):
+            possible[a][b] = b+1
+
+
+    # Calls itself again with an updated guess
     play(guesses, puz)
 
-def hints(g, p):
-  
-    # Enable print statements to make puzzle (and guesses) visible
-    '''
-    print(g)
-    print(p)
-    '''
 
-    # Check user's input and give hints
+# Check user's input and give hints
+def hints(g, p):
+
+    
     correctall = 0
     correct = 0
     tracker = [0, 0, 0, 0]
@@ -89,10 +107,8 @@ def hints(g, p):
                     tracker[b] = p[b]
                     break
 
-    '''                
-    print(tracker)
-    '''
-    
+
+    # This is where the program will end if the play function has optimized the possible guesses to the point where it guesses correctly
     if correctall == 4:
         print("You win!!")
         quit()
