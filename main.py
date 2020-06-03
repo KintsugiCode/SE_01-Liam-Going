@@ -31,13 +31,16 @@ MAIN MENU
 
     puz = generate_puzzle()
     play(puz)
+    
 
 def generate_puzzle():
 
     # Generate puzzle
     a = [0, 0, 0, 0]
+    
     for i in range(4):
         a[i] = random.randint(1, 6)
+        
     return a
 
 def play(puz):
@@ -52,33 +55,51 @@ def play(puz):
         if guesses[a] not in range(1, 7):
             print("Please enter only numbers between 1 and 6 - Start over:")
             play(puz)
+            
     
     print("Your guesses: " + str(guesses))
 
+    hints(guesses, puz)
 
 
+def hints(g, p):
   
     # Enable print statements to make puzzle (and guesses) visible
     '''
-    print(guesses)
-    print(puz)
+    print(g)
+    print(p)
     '''
 
     # Check user's input and give hints
+    correctall = 0
     correct = 0
-
+    tracker = [0, 0, 0, 0]
+    
 
     for b in range(4):
 
-        if guesses[b] == puz[b]:
-            correct += 1
+        if p[b] == g[b]:
+            correctall += 1
+            tracker[b] = p[b]
 
-    if correct == 4:
+        else:
+            for c in range(4):
+                if p[b] == g[c] and p[b] not in tracker:
+                    correct+= 1
+                    tracker[b] = p[b]
+                    break
+
+    '''                
+    print(tracker)
+    '''
+    
+    if correctall == 4:
         print("You win!!")
         quit()
 
-    print("You guessed " + str(correct) + " colors correctly! What are your next guesses?")
+    print("You guessed " + str(correctall) + " colors AND positions correctly!")
+    print("You guessed " + str(correct) + " colors correctly but they're in the WRONG position! What are your next guesses?")
 
-    play(puz)
+    play(p)
 
 reset()
